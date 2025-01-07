@@ -1,46 +1,56 @@
-# access_token
+# Access Token Function
 
-## 🧰 Usage
+This Appwrite function generates secure access tokens and sends them via email using SendGrid.
 
-### GET /ping
+## Setup Instructions
 
-- Returns a "Pong" message.
+1. **Create Appwrite Project**
+   - Go to your Appwrite Console
+   - Create a new project or use an existing one
+   - Note down the Project ID
 
-**Response**
+2. **Database Setup**
+   - Create a new database
+   - Create a collection with the following attributes:
+     - `name` (string)
+     - `email` (string)
+     - `token` (string)
+   - Note down the Database ID and Collection ID
 
-Sample `200` Response:
+3. **SendGrid Setup**
+   - Create a SendGrid account if you don't have one
+   - Verify your sender email address
+   - Create an API key with email sending permissions
+   - Note down the API key
 
-```text
-Pong
-```
+4. **Environment Variables**
+   Set the following environment variables in your Appwrite Console:
+   ```
+   APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
+   APPWRITE_PROJECT_ID=your-project-id
+   APPWRITE_API_KEY=your-api-key
+   APPWRITE_DATABASE_ID=your-database-id
+   APPWRITE_COLLECTION_ID=your-collection-id
+   SENDGRID_API_KEY=your-sendgrid-api-key
+   SENDGRID_SENDER_EMAIL=your-verified-sender@email.com
+   FRONTEND_URL=https://your-frontend-url.com
+   ```
 
-### GET, POST, PUT, PATCH, DELETE /
+5. **Deploy Function**
+   ```bash
+   # Install Appwrite CLI
+   npm install -g appwrite-cli
 
-- Returns a "Learn More" JSON response.
+   # Login to Appwrite
+   appwrite login
 
-**Response**
+   # Deploy function
+   appwrite deploy function
+   ```
 
-Sample `200` Response:
+## Testing
 
-```json
-{
-  "motto": "Build like a team of hundreds_",
-  "learn": "https://appwrite.io/docs",
-  "connect": "https://appwrite.io/discord",
-  "getInspired": "https://builtwith.appwrite.io"
-}
-```
-
-## ⚙️ Configuration
-
-| Setting           | Value                             |
-| ----------------- | --------------------------------- |
-| Runtime           | Python (3.9)                      |
-| Entrypoint        | `src/main.py`                     |
-| Build Commands    | `pip install -r requirements.txt` |
-| Permissions       | `any`                             |
-| Timeout (Seconds) | 15                                |
-
-## 🔒 Environment Variables
-
-No environment variables required.
+To test the function:
+1. Create a new document in your collection with a name and email
+2. The function will generate a token and send an email
+3. Check the email for the access link
